@@ -4,8 +4,449 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sahilapage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .container {
+            padding: 3rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .accent {
+            color: #00ff88;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #888;
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .section {
+            margin-bottom: 8rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 3rem;
+            color: #fff;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, transparent);
+        }
+
+        .about-text {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            max-width: 800px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #00ff88;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tag:hover {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+            transform: translateY(-2px);
+        }
+
+        .project-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .project {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project:hover::before {
+            opacity: 1;
+        }
+
+        .project:hover {
+            border-color: rgba(0, 255, 136, 0.4);
+            transform: translateX(10px);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-emoji {
+            font-size: 2.5rem;
+        }
+
+        .project h3 {
+            font-size: 1.8rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .project p {
+            color: #999;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category h3 {
+            color: #00ff88;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            padding-left: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .skill-item:hover::before {
+            color: #00ff88;
+        }
+
+        .contact-section {
+            margin-top: 8rem;
+            padding: 4rem 0;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .contact-link:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+            color: #00ff88;
+            transform: translateY(-3px);
+        }
+
+        .highlight-text {
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 5%;
+            }
+
+            .section {
+                margin-bottom: 5rem;
+            }
+
+            .tags {
+                gap: 0.8rem;
+            }
+
+            .tag {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .project {
+                padding: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #00ff88;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    <h1>welcome to my page sahilapage :)</h1>
+    <div class="grain"></div>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>sahil apage<span class="accent">.</span></h1>
+            <p class="hero-subtitle">building tech, breaking limits</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">about</h2>
+            <p class="about-text">
+                19. mumbai. into robotics, AI, and full-stack dev. when i'm not coding or working on brain-controlled robotics, 
+                you'll find me playing football, watching <span class="highlight-text">virat</span> score centuries, or out riding bikes. 
+                i love tinkering with gadgets and editing videos.
+            </p>
+            <div class="tags">
+                <span class="tag">football</span>
+                <span class="tag">bikes</span>
+                <span class="tag">video editing</span>
+                <span class="tag">gadgets</span>
+                <span class="tag">virat fan</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">what i'm working on</h2>
+            <div class="project-grid">
+                <div class="project">
+                    <div class="project-header">
+                        <span class="project-emoji">🦾</span>
+                        <h3>bionic hand</h3>
+                    </div>
+                    <p>developing a bionic hand controlled via EEG signals. working on the intersection of neuroscience and robotics to create intuitive prosthetic control.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <span class="project-emoji">🛡️</span>
+                        <h3>anti-drone system</h3>
+                    </div>
+                    <p>built a proof-of-concept system for detecting and neutralizing unauthorized drones. combines detection algorithms with automated response mechanisms.</p>
+                </div>
+
+                <div class="project">
+                    <div class="project-header">
+                        <span class="project-emoji">💻</span>
+                        <h3>mern applications</h3>
+                    </div>
+                    <p>full-stack web applications using mongodb, express, react, and node.js. from real-time collaboration tools to data-driven platforms.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>development</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">mern stack</div>
+                        <div class="skill-item">react & node.js</div>
+                        <div class="skill-item">javascript/es6+</div>
+                        <div class="skill-item">mongodb</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>ai & robotics</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">deep learning</div>
+                        <div class="skill-item">eeg signal processing</div>
+                        <div class="skill-item">robotics systems</div>
+                        <div class="skill-item">neural interfaces</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>other</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">video editing</div>
+                        <div class="skill-item">hardware prototyping</div>
+                        <div class="skill-item">system design</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2 class="section-title">connect</h2>
+            <div class="contact-links">
+                <a href="mailto:sahilvapage@gmail.com" class="contact-link">
+                    <span>📧</span>
+                    <span>sahilvapage@gmail.com</span>
+                </a>
+                <a href="https://github.com/sahilapage" target="_blank" class="contact-link">
+                    <span>💻</span>
+                    <span>github.com/sahilapage</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator">↑</div>
+
+    <script>
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollIndicator.classList.add('visible');
+            } else {
+                scrollIndicator.classList.remove('visible');
+            }
+        });
+
+        scrollIndicator.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const projects = document.querySelectorAll('.project');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        projects.forEach(project => {
+            project.style.opacity = '0';
+            project.style.transform = 'translateY(30px)';
+            project.style.transition = 'all 0.6s ease-out';
+            observer.observe(project);
+        });
+    </script>
 </body>
 </html>
