@@ -1,732 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sahilapage</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        .grain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.6;
-        }
-
-        .container {
-            padding: 3rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero {
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
-            margin-bottom: 5rem;
-        }
-
-        .hero-content {
-            flex: 1;
-        }
-
-        .hero-image {
-            flex-shrink: 0;
-            width: 300px;
-            height: 300px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 3px solid rgba(0, 255, 136, 0.3);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .hero-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 1;
-        }
-
-        .hero-image:hover::before {
-            opacity: 1;
-        }
-
-        .hero-image:hover {
-            border-color: #00ff88;
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.3);
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 7rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #fff;
-            letter-spacing: -0.02em;
-        }
-
-        .accent {
-            color: #00ff88;
-        }
-
-        .section {
-            margin-bottom: 8rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 3rem;
-            color: #fff;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60%;
-            height: 3px;
-            background: linear-gradient(90deg, #00ff88, transparent);
-        }
-
-        .about-text {
-            font-size: 1.3rem;
-            color: #b0b0b0;
-            max-width: 800px;
-            margin-bottom: 3rem;
-            line-height: 1.8;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .tag {
-            padding: 0.8rem 1.5rem;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 8px;
-            font-size: 1rem;
-            color: #00ff88;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .tag:hover {
-            background: rgba(0, 255, 136, 0.2);
-            border-color: #00ff88;
-            transform: translateY(-2px);
-        }
-
-        .project-grid {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .project {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .project:hover::before {
-            opacity: 1;
-        }
-
-        .project:hover {
-            border-color: rgba(0, 255, 136, 0.4);
-            transform: translateX(10px);
-        }
-
-        .project-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .project h3 {
-            font-size: 1.8rem;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 6px;
-            color: #00ff88;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-link:hover {
-            background: rgba(0, 255, 136, 0.2);
-            border-color: #00ff88;
-            transform: translateY(-2px);
-        }
-
-        .project-link svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-
-        .project p {
-            color: #999;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category h3 {
-            color: #00ff88;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .skill-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .skill-item {
-            color: #b0b0b0;
-            font-size: 1.1rem;
-            padding-left: 1.5rem;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .skill-item::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: #00ff88;
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            color: #fff;
-            transform: translateX(5px);
-        }
-
-        .skill-item:hover::before {
-            color: #00ff88;
-        }
-
-        .contact-section {
-            margin-top: 8rem;
-            padding: 4rem 0;
-        }
-
-        .contact-links {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 1.2rem 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #e0e0e0;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .contact-link:hover {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: #00ff88;
-            color: #00ff88;
-            transform: translateY(-3px);
-        }
-
-        .contact-link svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        .highlight-text {
-            color: #00ff88;
-            font-weight: 600;
-        }
-
-        /* SRA Webring Button Styles */
-        .webring-button {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            z-index: 100;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            border-radius: 12px;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .webring-button:hover {
-            background: rgba(0, 255, 136, 0.15);
-            border-color: #00ff88;
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-        }
-
-        .webring-button img {
-            width: 48px;
-            height: 48px;
-            display: block;
-            transition: all 0.3s ease;
-        }
-
-        .webring-button:hover img {
-            filter: brightness(1.2);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 2rem 5%;
-            }
-
-            .hero {
-                flex-direction: column-reverse;
-                min-height: auto;
-                padding-top: 2rem;
-            }
-
-            .hero-image {
-                width: 250px;
-                height: 250px;
-            }
-
-            .section {
-                margin-bottom: 5rem;
-            }
-
-            .tags {
-                gap: 0.8rem;
-            }
-
-            .tag {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-
-            .project {
-                padding: 2rem;
-            }
-
-            .project-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .webring-button {
-                bottom: 1rem;
-                left: 1rem;
-                padding: 0.6rem;
-            }
-
-            .webring-button img {
-                width: 40px;
-                height: 40px;
-            }
-        }
-
-        .scroll-indicator {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #00ff88;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-            cursor: pointer;
-        }
-
-        .scroll-indicator.visible {
-            opacity: 1;
-        }
-
-        .scroll-indicator:hover {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: #00ff88;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sahil Apage</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="grain"></div>
-    
-    <!-- SRA Webring Button -->
-    <!-- <a href="https://sravjti.in/webring/redirect.html?site=sahilapage.github.io" title="SRA Webring" class="webring-button">
-        <img src="https://sravjti.in/webring/khopdi.svg" alt="SRA Webring">
-    </a> -->
-    <a href="https://sravjti.in/webring/" title="SRA Webring">
-        <img src="https://sravjti.in/webring/khopdi.svg" alt="SRA Webring" style="width:48px;height:48px;">
-    </a>
 
-    <div class="container">
-        <div class="hero">
-            <div class="hero-content">
-                <h1>sahil apage<span class="accent">.</span></h1>
-            </div>
-            <div class="hero-image">
-                <img src="images/myphoto.jpeg" alt="Sahil Apage">
-            </div>
+  <!-- Grain overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <a href="#hero" class="nav-logo">SA</a>
+    <div class="nav-links">
+      <a href="#about" data-nav>About</a>
+      <a href="#work" data-nav>Work</a>
+      <a href="#life" data-nav>Life</a>
+      <a href="#contact" data-nav>Contact</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" data-nav>About</a>
+    <a href="#work" data-nav>Work</a>
+    <a href="#life" data-nav>Life</a>
+    <a href="#contact" data-nav>Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="hero-line" data-reveal>SAHIL</span>
+        <span class="hero-line hero-line--indent" data-reveal>APAGE</span>
+      </h1>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section about" id="about">
+    <div class="section-label" data-reveal>001 — About</div>
+    <div class="hand-drawn-separator" data-reveal></div>
+    <div class="about-grid">
+      <div class="about-image-wrap" data-reveal>
+        <img src="images/sahil.jpg" alt="Sahil Apage" class="about-image" loading="lazy">
+      </div>
+      <div class="about-text" data-reveal>
+        <h2 class="section-heading">building things</h2>
+        <p>
+          Sahil Apage — 19, engineering student based in Mumbai. Currently studying at 
+          <strong>VJTI Mumbai</strong> and building robots at the 
+          <a href="https://sravjti.in/" target="_blank" rel="noopener noreferrer">Society of Robotics and Automation</a>.
+        </p>
+        <p>
+          into robotics, reinforcement learning, and signal processing. When not in the lab — 
+          playing football or riding motorcycles through the city.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section class="section work" id="work">
+    <div class="section-label" data-reveal>002 — Work</div>
+    <div class="hand-drawn-separator" data-reveal></div>
+
+    <!-- Project 1 -->
+    <article class="project" data-reveal>
+      <div class="project-header">
+        <span class="project-index">01</span>
+        <h3 class="project-title">Bionic Hand</h3>
+      </div>
+      <div class="project-grid">
+        <div class="project-image-wrap">
+          <img src="images/bionic_hand.jpg" alt="Bionic Hand Project" class="project-image" loading="lazy">
         </div>
-
-        <div class="section">
-            <h2 class="section-title">about</h2>
-            <p class="about-text">
-                19. mumbai. into robotics, AI, and full-stack dev. when i'm not coding or working on brain-controlled robotics, 
-                you'll find me playing football, watching <span class="highlight-text">virat</span> score centuries, or out riding bikes. 
-                i love tinkering with gadgets and editing videos.
-            </p>
+        <div class="project-info">
+          <p class="project-desc">
+            Currently developing a 3D-printed bionic hand for dexterous manipulation at SRA. 
+            The system explores imitation learning, reinforcement learning for grasping, and 
+            EEG signal processing for brain-computer interfacing.
+          </p>
+          <ul class="project-tags">
+            <li>Imitation Learning</li>
+            <li>Reinforcement Learning</li>
+            <li>EEG Processing</li>
+            <li>3D Printing</li>
+          </ul>
+          <p class="project-note">
+            Goal: intelligent prosthetic systems that learn manipulation policies from 
+            demonstrations and neural signals.
+          </p>
+          <a href="https://github.com/sahilapage/Bionic-Hand-Controlled-Over-EEG" target="_blank" rel="noopener noreferrer" class="project-link">View on GitHub →</a>
         </div>
+      </div>
+    </article>
 
-        <div class="section">
-            <h2 class="section-title">what i'm working on</h2>
-            <div class="project-grid">
-                <div class="project">
-                    <div class="project-header">
-                        <h3>bionic hand</h3>
-                        <a href="https://github.com/sahilapage/Bionic-Hand-Controlled-Over-EEG" target="_blank" class="project-link">
-                            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                            </svg>
-                            github
-                        </a>
-                    </div>
-                    <p>developing a bionic hand controlled via EEG signals. working on the intersection of neuroscience and robotics to create intuitive prosthetic control.</p>
-                </div>
-
-                <div class="project">
-                    <div class="project-header">
-                        <h3>anti-drone system</h3>
-                        <a href="https://github.com/badboy1606/anti_drone" target="_blank" class="project-link">
-                            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                            </svg>
-                            github
-                        </a>
-                    </div>
-                    <p>built a proof-of-concept system for detecting and neutralizing unauthorized drones. combines detection algorithms with automated response mechanisms.</p>
-                </div>
-
-                <div class="project">
-                    <div class="project-header">
-                        <h3>FinIQ</h3>
-                        <a href="https://github.com/swamini-jadhav/FinIQ" target="_blank" class="project-link">
-                            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                            </svg>
-                            github
-                        </a>
-                    </div>
-                    <p>FinIQ revolutionizes stock market analysis by combining cutting-edge machine learning with intuitive design. Built on the MERN stack with an integrated Flask ML service, it delivers sophisticated LSTM-based price forecasting, real-time news sentiment analysis, and conversational AI assistance—all in one seamless platform.</p>
-                </div>
-            </div>
+    <!-- Project 2 -->
+    <article class="project" data-reveal>
+      <div class="project-header">
+        <span class="project-index">02</span>
+        <h3 class="project-title">Anti-Drone System</h3>
+      </div>
+      <div class="project-grid project-grid--reverse">
+        <div class="project-image-wrap">
+          <img src="images/sih.jpg" alt="Anti-Drone System" class="project-image" loading="lazy">
         </div>
-
-        <div class="section">
-            <h2 class="section-title">skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>development</h3>
-                    <div class="skill-list">
-                        <div class="skill-item">mern stack</div>
-                        <div class="skill-item">react & node.js</div>
-                        <div class="skill-item">javascript</div>
-                        <div class="skill-item">mongodb</div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>ai & robotics</h3>
-                    <div class="skill-list">
-                        <div class="skill-item">deep learning</div>
-                        <div class="skill-item">eeg signal processing</div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>other</h3>
-                    <div class="skill-list">
-                        <div class="skill-item">video editing</div>
-                        <div class="skill-item">cook good food</div>
-                    </div>
-                </div>
-            </div>
+        <div class="project-info">
+          <p class="project-desc">
+            Built an RF-based Anti-Drone System for a national government competition 
+            conducted for the Indo-Tibetan Border Police (ITBP). Integrated RF engineering, 
+            AI perception, and embedded systems into a unified defense platform.
+          </p>
+          <ul class="project-tags">
+            <li>RF Detection</li>
+            <li>Vision-Language Models</li>
+            <li>RF Jamming</li>
+            <li>RF Spoofing</li>
+          </ul>
+          <a href="https://github.com/badboy1606/anti_drone" target="_blank" rel="noopener noreferrer" class="project-link">View on GitHub →</a>
         </div>
+      </div>
+    </article>
 
-        <div class="contact-section">
-            <h2 class="section-title">connect</h2>
-            <div class="contact-links">
-                <a href="mailto:sahilvapage@gmail.com" class="contact-link">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                    </svg>
-                    <span>sahilvapage@gmail.com</span>
-                </a>
-                <a href="https://github.com/sahilapage" target="_blank" class="contact-link">
-                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                    </svg>
-                    <span>github.com/sahilapage</span>
-                </a>
-            </div>
+    <!-- Project 3 -->
+    <article class="project" data-reveal>
+      <div class="project-header">
+        <span class="project-index">03</span>
+        <h3 class="project-title">Wall-E Self Balancing Robot</h3>
+      </div>
+      <div class="project-grid">
+        <div class="project-image-wrap">
+          <img src="images/walle.jpg" alt="Wall-E Robot" class="project-image" loading="lazy">
         </div>
+        <div class="project-info">
+          <p class="project-desc">
+            Wall-E — a two-wheeled self-balancing and line-following robot. 
+            An exercise in control systems, sensor fusion, and embedded programming.
+          </p>
+          <ul class="project-tags">
+            <li>Control Systems</li>
+            <li>Self-Balancing</li>
+            <li>Line Following</li>
+            <li>Embedded Systems</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Life -->
+  <section class="section life" id="life">
+    <div class="section-label" data-reveal>003 — Life</div>
+    <div class="hand-drawn-separator" data-reveal></div>
+
+    <div class="life-intro" data-reveal>
+      <p class="life-philosophy">
+        Curiosity is the engine. Persistence is the fuel. The best way to understand 
+        something is to build it — to feel where theory breaks against reality and 
+        learn from the friction.
+      </p>
     </div>
 
-    <div class="scroll-indicator">↑</div>
+    <!-- Virat -->
+    <div class="life-block" data-reveal>
+      <div class="life-block-grid">
+        <div class="life-block-image-wrap">
+          <img src="images/virat.jpg" alt="Virat Kohli" class="life-block-image" loading="lazy">
+        </div>
+        <div class="life-block-text">
+          <h3 class="life-block-title">The Kohli Effect</h3>
+          <p>
+            Growing up watching Virat Kohli shaped something fundamental — the idea that 
+            discipline compounds, that showing up when it's hard is not optional, and that 
+            consistency is the only real talent. His competitive intensity is a reminder that 
+            you earn everything.
+          </p>
+        </div>
+      </div>
+    </div>
 
-    <script>
-        const scrollIndicator = document.querySelector('.scroll-indicator');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                scrollIndicator.classList.add('visible');
-            } else {
-                scrollIndicator.classList.remove('visible');
-            }
-        });
+    <!-- Punjabi Music -->
+    <div class="life-block" data-reveal>
+      <h3 class="life-block-title">Punjabi Music</h3>
+      <p class="life-block-desc">
+        Big fan of Punjabi music. Karan Aujla and AP Dhillon stay on rotation — 
+        the energy just hits different when you're building at 2 AM.
+      </p>
+      <div class="life-dual-images">
+        <div class="life-dual-image-wrap">
+          <img src="images/aujla.jpg" alt="Karan Aujla" class="life-dual-image" loading="lazy">
+          <span class="life-image-label">Karan Aujla</span>
+        </div>
+        <div class="life-dual-image-wrap">
+          <img src="images/ap.jpg" alt="AP Dhillon" class="life-dual-image" loading="lazy">
+          <span class="life-image-label">AP Dhillon</span>
+        </div>
+      </div>
+    </div>
 
-        scrollIndicator.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+    <!-- Drawing -->
+    <div class="life-block" data-reveal>
+      <h3 class="life-block-title">Drawing</h3>
+      <p class="life-block-desc">
+        Sometimes I draw. It's the one creative outlet that feels effortless — 
+        no compiler errors, no debugging. Just a pencil and whatever comes out.
+      </p>
+      <div class="life-dual-images">
+        <div class="life-dual-image-wrap">
+          <img src="images/drawing.jpg" alt="Drawing — work in progress" class="life-dual-image" loading="lazy">
+          <span class="life-image-label">Work in progress</span>
+        </div>
+        <div class="life-dual-image-wrap">
+          <img src="images/drawing_2.jpg" alt="Finished drawing" class="life-dual-image" loading="lazy">
+          <span class="life-image-label">Finished</span>
+        </div>
+      </div>
+    </div>
 
-        const projects = document.querySelectorAll('.project');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+    <!-- Cooking -->
+    <div class="life-block" data-reveal>
+      <h3 class="life-block-title">Cooking</h3>
+      <p class="life-block-desc">
+        I cook. And I'm surprisingly good at it. Engineering teaches you to follow 
+        processes — cooking is just delicious chemistry with better feedback loops.
+      </p>
+    </div>
+  </section>
 
-        projects.forEach(project => {
-            project.style.opacity = '0';
-            project.style.transform = 'translateY(30px)';
-            project.style.transition = 'all 0.6s ease-out';
-            observer.observe(project);
-        });
+  <!-- Contact -->
+  <section class="section contact" id="contact">
+    <div class="section-label" data-reveal>004 — Contact</div>
+    <div class="hand-drawn-separator" data-reveal></div>
+    <div class="contact-content" data-reveal>
+      <h2 class="contact-heading">Let's talk.</h2>
+      <p class="contact-sub">Open to collaborations, conversations, and interesting problems.</p>
+      <div class="contact-links">
+        <a href="mailto:sahilvapage@gmail.com" class="contact-link" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13L2 4"/></svg>
+          <span>Email</span>
+        </a>
+        <a href="https://github.com/sahilapage" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <a href="https://www.linkedin.com/in/sahilapage/" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://x.com/5ahilapage" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>X</span>
+        </a>
+        <a href="https://instagram.com/sahilapage" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-        // Mouse trail effect
-        const trail = [];
-        const trailLength = 20;
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="hand-drawn-separator"></div>
+    <div class="footer-content">
+      <span>Sahil Apage — 2026</span>
+    </div>
+  </footer>
 
-        for (let i = 0; i < trailLength; i++) {
-            const dot = document.createElement('div');
-            dot.style.position = 'fixed';
-            dot.style.width = '4px';
-            dot.style.height = '4px';
-            dot.style.background = `rgba(0, 255, 136, ${1 - i / trailLength})`;
-            dot.style.borderRadius = '50%';
-            dot.style.pointerEvents = 'none';
-            dot.style.zIndex = '9999';
-            dot.style.transition = 'transform 0.1s ease-out';
-            document.body.appendChild(dot);
-            trail.push(dot);
-        }
-
-        let mouseX = 0;
-        let mouseY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateTrail() {
-            let x = mouseX;
-            let y = mouseY;
-
-            trail.forEach((dot, index) => {
-                const nextDot = trail[index + 1] || trail[0];
-                
-                dot.style.left = x + 'px';
-                dot.style.top = y + 'px';
-
-                const dotRect = dot.getBoundingClientRect();
-                x += (parseFloat(nextDot.style.left) - x) * 0.3;
-                y += (parseFloat(nextDot.style.top) - y) * 0.3;
-            });
-
-            requestAnimationFrame(animateTrail);
-        }
-
-        animateTrail();
-
-        // Interactive project cards - click to expand
-        projects.forEach(project => {
-            let isExpanded = false;
-            
-            // Exclude the link from triggering expansion
-            project.addEventListener('click', (e) => {
-                if (e.target.closest('.project-link')) {
-                    e.stopPropagation();
-                    return;
-                }
-                
-                if (!isExpanded) {
-                    project.style.transform = 'scale(1.02)';
-                    project.style.zIndex = '10';
-                    project.style.boxShadow = '0 20px 60px rgba(0, 255, 136, 0.3)';
-                } else {
-                    project.style.transform = 'translateX(0)';
-                    project.style.zIndex = '1';
-                    project.style.boxShadow = 'none';
-                }
-                isExpanded = !isExpanded;
-            });
-        });
-
-        // Parallax effect on hero
-        const hero = document.querySelector('.hero h1');
-        
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-            }
-        });
-
-        // Skill items pulse on hover
-        const skillItems = document.querySelectorAll('.skill-item');
-        skillItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                item.style.animation = 'pulse 0.5s ease';
-            });
-            item.addEventListener('animationend', () => {
-                item.style.animation = '';
-            });
-        });
-
-        // Add pulse animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0%, 100% { transform: translateX(5px) scale(1); }
-                50% { transform: translateX(5px) scale(1.05); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Typewriter effect on page load
-        const heroTitle = document.querySelector('.hero h1');
-        if (heroTitle) {
-            const originalText = heroTitle.textContent;
-            heroTitle.textContent = '';
-            
-            let i = 0;
-            function typeWriter() {
-                if (i < originalText.length) {
-                    heroTitle.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 100);
-                }
-            }
-            
-            setTimeout(typeWriter, 500);
-        }
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
