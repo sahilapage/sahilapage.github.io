@@ -13,7 +13,7 @@
   color-scheme: light;
 }
 html { background: var(--page); }
-body { background: var(--page); color: var(--ink); font-family: var(--serif); margin: 0; padding: 40px 30px 60px; font-variant-caps: all-small-caps; }
+body { background: var(--page); color: var(--ink); font-family: var(--serif); margin: 0; padding: 40px 30px 60px; font-variant-caps: all-small-caps; text-transform: lowercase; }
 .main { max-width: 860px; margin: 0; }
 a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--blue); }
@@ -70,3 +70,8 @@ h1 { font-size: 52px; font-weight: 700; letter-spacing: -.5px; line-height: 1.1;
 
 .quests { margin: 0; padding: 0; list-style: none; font-size: 20px; line-height: 1.7; }
 @media (max-width: 720px) { .quests { font-size: 18px; } }
+
+/* nav under the photo, stacked */
+.nav { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; font-size: 17px; letter-spacing: .8px; }
+.side .nav { margin-top: 18px; }
+main > .nav { margin-bottom: 40px; }
