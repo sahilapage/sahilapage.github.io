@@ -13,7 +13,7 @@
   color-scheme: light;
 }
 html { background: var(--page); }
-body { background: var(--page); color: var(--ink); font-family: var(--serif); margin: 0; padding: 40px 30px 60px; font-variant-caps: small-caps; }
+body { background: var(--page); color: var(--ink); font-family: var(--serif); margin: 0; padding: 40px 30px 60px; text-transform: lowercase; }
 .main { max-width: 860px; margin: 0; }
 a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--blue); }
