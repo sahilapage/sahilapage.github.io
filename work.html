@@ -12,42 +12,45 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="main">
-  <main>
+<div class="page">
+  <header class="top">
+    <a class="home" href="./">sahil apage</a>
     <nav class="nav" aria-label="Main">
-      <a href="./">About</a>
-      <a href="work.html" aria-current="page">Work</a>
+      <a href="./">about</a>
+      <a href="work.html" aria-current="page">work</a>
     </nav>
-    <h1>Work</h1>
-    <div class="text">
-      <p>Robots I have built and problems I have worked on.</p>
-    </div>
+  </header>
 
-    <div class="entries" style="margin-top: 40px">
-      <!-- Entry template: copy one <article> per project, newest first, and delete the .empty line.
+  <main>
+    <h1>work</h1>
+    <p class="dek">robots i have built and problems i have worked on.</p>
+
+    <div class="entries">
+      <!-- Entry template: copy one <article> per project, newest first.
       <article class="entry">
         <figure class="entry-media"><img src="images/PROJECT.jpg" alt="PROJECT"></figure>
         <div>
-          <h2 class="entry-title">Project title</h2>
-          <p class="entry-meta">2026 &middot; what I did</p>
-          <div class="text"><p>Two or three sentences on what it is, what was hard and what worked.</p></div>
-          <div class="entry-links"><a href="#">CODE</a><a href="#">VIDEO</a></div>
+          <h2 class="entry-title">project title</h2>
+          <p class="entry-meta">2026 · what i did</p>
+          <p>two or three sentences on what it is, what was hard and what worked.</p>
+          <div class="entry-links"><a href="#">code</a><a href="#">video</a></div>
         </div>
       </article>
       -->
       <article class="entry">
         <figure class="entry-media"><a href="https://sahilapage.github.io/eval-audit/"><img src="images/microwave.jpg" alt="LIBERO kitchen scene with the microwave the seed moves" width="360" height="360"></a></figure>
         <div>
-          <h2 class="entry-title">The seed moved the microwave</h2>
-          <p class="entry-meta">2026 &middot; research</p>
-          <div class="text"><p>I ran 521 evaluations of robot policies in simulation to find out where a success rate comes from. The random seed moves furniture that the stored scenes never record, and the GPU, renderer, simulator version and a few hidden settings each change results as much as a new seed.</p></div>
-          <div class="entry-links"><a href="https://sahilapage.github.io/eval-audit/">READ</a></div>
+          <h2 class="entry-title"><a href="https://sahilapage.github.io/eval-audit/">the seed moved the microwave</a></h2>
+          <p class="entry-meta">2026 · research</p>
+          <p>i ran 521 evaluations of robot policies in simulation to find out where a success rate comes from. the random seed moves furniture that the stored scenes never record, and the GPU, renderer, simulator version and a few hidden settings each change results as much as a new seed.</p>
+          <div class="entry-links"><a href="https://sahilapage.github.io/eval-audit/">read the post</a></div>
         </div>
       </article>
     </div>
   </main>
 
-  <footer class="foot">
+  <footer>
+    <span>sahil apage · mumbai</span>
     <a href="https://sravjti.in/webring/" title="SRA Webring"><img src="https://sravjti.in/webring/khopdi.svg" alt="SRA Webring"></a>
   </footer>
 </div>
