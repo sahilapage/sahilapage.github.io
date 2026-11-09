@@ -30,7 +30,9 @@
   const show = i => {
     idx = (i + group.length) % group.length; const b = group[idx];
     lbm.innerHTML = '';
-    if (b.dataset.video) { const v = document.createElement('video'); Object.assign(v, { src: b.dataset.video, muted: true, loop: true, playsInline: true, autoplay: true, controls: true }); lbm.append(v); }
+    if (b.dataset.video) { const v = document.createElement('video'); const still = b.querySelector('video').poster;
+      Object.assign(v, { src: b.dataset.video, poster: still, muted: true, loop: true, playsInline: true, autoplay: true, controls: true });
+      v.addEventListener('error', () => { const im = new Image(); im.src = still; im.alt = b.dataset.cap; v.replaceWith(im); }); lbm.append(v); }
     else { const im = new Image(); im.src = b.dataset.full; im.alt = b.dataset.cap; lbm.append(im); }
     lbc.textContent = b.dataset.cap;
   };
