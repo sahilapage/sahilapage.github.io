@@ -4,158 +4,126 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahil Apage</title>
-<meta name="description" content="Sahil Apage, 20, builds robots in Mumbai and tests whether the simulators we train them in tell the truth.">
+<meta name="description" content="Sahil Apage, 20, Mumbai. Robot learning, world models and self-driving.">
 <meta property="og:title" content="Sahil Apage">
-<meta property="og:description" content="making robots actually work.">
+<meta property="og:description" content="robot learning, world models, self-driving, and a lot of side quests.">
 <meta property="og:url" content="https://sahilapage.github.io/">
-<meta property="og:image" content="https://sahilapage.github.io/media/sohand-setup.jpg">
+<meta property="og:image" content="https://sahilapage.github.io/media/sohand-assembled.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="mosaic" id="top">
-  <canvas id="mosaic" role="img" aria-label="A mosaic of the red robot hand I built, raised against a pale ceiling. The tiles move away from your cursor; click to scatter them."></canvas>
-  <span class="mosaic-hint">the hand i built &middot; click it</span>
+<div class="scene" id="top">
+  <canvas id="scene" role="img" aria-label="A pixel evening scene, drawn fresh on every visit: a setting sun, clouds and birds over hills or the sea. The tiles move away from your cursor; click to scatter them."></canvas>
 </div>
 
 <main class="wrap">
   <header class="head">
     <div class="intro">
-      <h1 class="up">making robots <em>actually</em> work.</h1>
-      <p class="status up" style="animation-delay:.1s">it&rsquo;s <span id="clock">evening</span> in mumbai. <a href="mailto:sahilvapage@gmail.com">say hi <span class="ne">&#8599;</span></a></p>
-      <div class="prose" style="margin-top:28px">
-        <p class="lede up" style="animation-delay:.2s">i&rsquo;m sahil, a 20-year-old in mumbai who likes making robots actually work. i study electronics with a minor in robotics at <a href="https://vjti.ac.in">vjti</a>, and i like the whole stack: servos and esp32s, 3d-printed hands, policies that learn on real hardware, and the learned simulators we train them in.</p>
-        <p class="up" style="animation-delay:.3s">lately i&rsquo;ve been asking one question: <b>when a world model says a plan is safe, is it?</b> two papers so far, one a <a href="#research">spotlight at corl 2026</a>.</p>
-        <p class="up" style="animation-delay:.35s">the past two years, i&rsquo;ve been:</p>
-        <ul class="done">
-          <li class="up" style="animation-delay:.4s">building a <a href="#hands">robot hand</a>, a <a href="#cars">self-driving rc car</a> and a robot that <a href="#hardware">learns atari on real hardware</a></li>
-          <li class="up" style="animation-delay:.45s">porting comma.ai&rsquo;s world model to one gpu, and getting a <a href="https://github.com/YassineYousfi/openpilot.distill/pull/1">pull request merged by comma</a></li>
-          <li class="up" style="animation-delay:.5s">teaching robotics workshops to <span class="count">200+</span> first-years at <a href="https://sravjti.in">SRA</a></li>
-          <li class="up" style="animation-delay:.55s">putting everything on <a href="https://github.com/sahilapage">github</a> <a class="spark-a" href="https://github.com/sahilapage" aria-label="GitHub contributions, Nov 2025 to Nov 2026: 310 in total, rising fastest this fall" title="GitHub contributions, Nov 2025 to Nov 2026 (310)"><svg class="spark" viewBox="0 0 40 12" aria-hidden="true"><path d="M0.0,11.0 L0.8,10.8 L1.5,10.8 L2.3,10.7 L3.1,10.5 L3.8,10.5 L4.6,10.2 L5.4,10.1 L6.2,10.0 L6.9,9.7 L7.7,9.6 L8.5,9.4 L9.2,8.9 L10.0,8.7 L10.8,8.7 L11.5,8.7 L12.3,8.6 L13.1,8.6 L13.8,8.5 L14.6,8.5 L15.4,8.4 L16.2,8.4 L16.9,8.4 L17.7,8.2 L18.5,8.1 L19.2,8.1 L20.0,8.1 L20.8,7.5 L21.5,7.5 L22.3,7.5 L23.1,6.7 L23.8,6.5 L24.6,6.5 L25.4,6.5 L26.2,6.5 L26.9,6.5 L27.7,6.5 L28.5,5.6 L29.2,4.6 L30.0,4.6 L30.8,4.6 L31.5,4.5 L32.3,4.5 L33.1,4.5 L33.8,4.4 L34.6,4.4 L35.4,4.4 L36.2,4.3 L36.9,3.9 L37.7,2.0 L38.5,1.7 L39.2,1.1 L40.0,1.0 L40,12 L0,12 Z" fill="currentColor" opacity=".1"/><path d="M0.0,11.0 L0.8,10.8 L1.5,10.8 L2.3,10.7 L3.1,10.5 L3.8,10.5 L4.6,10.2 L5.4,10.1 L6.2,10.0 L6.9,9.7 L7.7,9.6 L8.5,9.4 L9.2,8.9 L10.0,8.7 L10.8,8.7 L11.5,8.7 L12.3,8.6 L13.1,8.6 L13.8,8.5 L14.6,8.5 L15.4,8.4 L16.2,8.4 L16.9,8.4 L17.7,8.2 L18.5,8.1 L19.2,8.1 L20.0,8.1 L20.8,7.5 L21.5,7.5 L22.3,7.5 L23.1,6.7 L23.8,6.5 L24.6,6.5 L25.4,6.5 L26.2,6.5 L26.9,6.5 L27.7,6.5 L28.5,5.6 L29.2,4.6 L30.0,4.6 L30.8,4.6 L31.5,4.5 L32.3,4.5 L33.1,4.5 L33.8,4.4 L34.6,4.4 L35.4,4.4 L36.2,4.3 L36.9,3.9 L37.7,2.0 L38.5,1.7 L39.2,1.1 L40.0,1.0" fill="none" stroke="currentColor" stroke-width="1.1" vector-effect="non-scaling-stroke"/><circle cx="40" cy="1" r="1.3" fill="#d63d2a"/></svg></a> &mdash; runner-up at smart india hackathon 2025, first at cognition next&rsquo;26</li>
-        </ul>
-      </div>
-    </div>
-    <aside class="side">
-      <nav class="pages up" aria-label="Pages" style="animation-delay:.15s">
-        <a href="#story" class="on">story</a>
-        <a href="#research">research</a>
-        <a href="#built">projects</a>
+      <h1 class="up">hi, i&rsquo;m sahil.</h1>
+      <p class="lede up" style="animation-delay:.08s">20, based in mumbai. i want to solve problems for the greater good.</p>
+      <p class="lede up" style="animation-delay:.14s">i like working on robot learning, world models and self-driving, and side-questing on a lot of other things.</p>
+      <p class="status up" style="animation-delay:.2s">it&rsquo;s <span id="clock">evening</span> in mumbai right now.</p>
+      <nav class="pages up" aria-label="Sections" style="animation-delay:.25s">
+        <a href="#publications">publications</a>
         <a href="#contact">contact</a>
+        <a href="#journey">journey</a>
       </nav>
-      <figure class="me up" style="animation-delay:.25s">
-        <img src="media/me.jpg" width="787" height="1400" alt="Sahil Apage standing at a carved brass door">
-        <figcaption>that&rsquo;s me</figcaption>
-      </figure>
-    </aside>
+    </div>
+    <figure class="me up" style="animation-delay:.2s">
+      <img src="media/me.jpg" width="787" height="1400" alt="Sahil Apage standing at a carved brass door">
+    </figure>
   </header>
 
-  <section id="story">
-    <h2>how i got here</h2>
-
-    <div class="part" id="club">
-      <div class="prose">
-        <p class="when">2024 &ndash; 2025</p>
-        <p>it started at <b>SRA</b>, our college robotics club. a year after sitting in its workshops i was running them: we packed and sold <b>Wall-E</b> robot kits to first-years, and i taught <a href="https://github.com/SRA-VJTI/MARIO">MARIO</a> (a ros 2 arm) and <a href="https://github.com/SRA-VJTI/Pixels">Pixels</a> (computer vision) to 200+ students. in december 2025 six of us took an <a href="https://github.com/4rhan/anti_drone">anti-drone system</a> to the smart india hackathon grand finale and came runner-up: a software-defined radio hears the drone, a yolo detector and a pan-tilt turret track it. in march 2026 we visited isro in hyderabad.</p>
-      </div>
-      <div class="strip"><button class="shot" style="--ar:480/854" data-video="media/mario-arm.mp4" data-cap="MARIO, the ROS 2 arm from our workshop kit" aria-label="MARIO, the ROS 2 arm from our workshop kit"><video data-src="media/mario-arm.mp4" poster="media/mario-arm.jpg" muted loop playsinline preload="none" width="480" height="854"></video></button><button class="shot" style="--ar:1182/666" data-full="media/sih-team.jpg" data-cap="Team Benzene at the Smart India Hackathon 2025 grand finale" aria-label="Team Benzene at the Smart India Hackathon 2025 grand finale"><img src="media/sih-team.jpg" alt="Team Benzene at the Smart India Hackathon 2025 grand finale" width="1182" height="666" loading="lazy"></button><button class="shot" style="--ar:627/566" data-full="media/antidrone-turret.jpg" data-cap="the anti-drone turret, tracking what the detector sees" aria-label="the anti-drone turret, tracking what the detector sees"><img src="media/antidrone-turret.jpg" alt="the anti-drone turret, tracking what the detector sees" width="627" height="566" loading="lazy"></button><button class="shot" style="--ar:1400/650" data-full="media/antidrone-spectrum.jpg" data-cap="a drone&#x27;s control link hopping across the 2.4 GHz band" aria-label="a drone&#x27;s control link hopping across the 2.4 GHz band"><img src="media/antidrone-spectrum.jpg" alt="a drone&#x27;s control link hopping across the 2.4 GHz band" width="1400" height="650" loading="lazy"></button><button class="shot" style="--ar:768/1024" data-full="media/isro.jpg" data-cap="industrial visit to ISRO, Hyderabad, March 2026" aria-label="industrial visit to ISRO, Hyderabad, March 2026"><img src="media/isro.jpg" alt="industrial visit to ISRO, Hyderabad, March 2026" width="768" height="1024" loading="lazy"></button></div>
-    </div>
-
-    <div class="part" id="hands">
-      <div class="prose">
-        <p class="when">january &ndash; june 2026</p>
-        <p>then hands, because they looked like the hardest part of a robot. i built pollen robotics&rsquo; <a href="https://github.com/sahilapage/so-hand">amazing hand</a>, four fingers and eight motors, gave it a mujoco model and trained a <b>SAC</b> policy that keeps a cube turning in its palm. i wrote retargeting that reads a human hand from ordinary video and moves the robot&rsquo;s to match, and later we put it on an <b>so-101</b> arm. at iit bombay&rsquo;s <a href="https://sites.google.com/view/wiredlab">wired lab</a> i designed a force-controlled, tendon-driven prosthetic hand.</p>
-      </div>
-      <div class="strip"><button class="shot" style="--ar:1400/1050" data-full="media/sohand-setup.jpg" data-cap="the hand, the AprilTag cube and the tracking camera" aria-label="the hand, the AprilTag cube and the tracking camera"><img src="media/sohand-setup.jpg" alt="the hand, the AprilTag cube and the tracking camera" width="1400" height="1050" loading="lazy"></button><button class="shot" style="--ar:416/368" data-video="media/sohand-sim.mp4" data-cap="SAC in MuJoCo: the cube keeps turning in the palm" aria-label="SAC in MuJoCo: the cube keeps turning in the palm"><video data-src="media/sohand-sim.mp4" poster="media/sohand-sim.jpg" muted loop playsinline preload="none" width="416" height="368"></video></button><button class="shot" style="--ar:1400/788" data-full="media/sohand-retarget.jpg" data-cap="retargeting: my hand, then the robot’s" aria-label="retargeting: my hand, then the robot’s"><img src="media/sohand-retarget.jpg" alt="retargeting: my hand, then the robot’s" width="1400" height="788" loading="lazy"></button><button class="shot" style="--ar:1050/1400" data-full="media/hand-arm-up.jpg" data-cap="the hand on an SO-101 arm" aria-label="the hand on an SO-101 arm"><img src="media/hand-arm-up.jpg" alt="the hand on an SO-101 arm" width="1050" height="1400" loading="lazy"></button><button class="shot" style="--ar:1151/1400" data-full="media/hand-arm-table.jpg" data-cap="arm and hand bring-up" aria-label="arm and hand bring-up"><img src="media/hand-arm-table.jpg" alt="arm and hand bring-up" width="1151" height="1400" loading="lazy"></button><button class="shot" style="--ar:787/1400" data-full="media/hand-arm-held.jpg" data-cap="the hand and arm, freshly assembled" aria-label="the hand and arm, freshly assembled"><img src="media/hand-arm-held.jpg" alt="the hand and arm, freshly assembled" width="787" height="1400" loading="lazy"></button></div>
-    </div>
-
-    <div class="part" id="hardware">
-      <div class="prose">
-        <p class="when">summer 2026</p>
-        <p>i wanted robots that learn on the real thing, not only in sim. so we rebuilt <a href="https://github.com/SRA-VJTI/physical-atari">physical atari</a>: an agent learns pong from pixels in real time while a small robot pushes a real joystick, with camera noise, motor lag and wear all part of the problem. i ported it to servos about six times cheaper and trained it until it played. i also trained <b>act, diffusion policy and vlas</b> on so-101 arms, from teleoperated demos to real rollouts.</p>
-      </div>
-      <div class="strip"><button class="shot" style="--ar:540/960" data-video="media/atari-eval.mp4" data-cap="trained: playing Pong through a real joystick" aria-label="trained: playing Pong through a real joystick"><video data-src="media/atari-eval.mp4" poster="media/atari-eval.jpg" muted loop playsinline preload="none" width="540" height="960"></video></button><button class="shot" style="--ar:540/960" data-video="media/atari-train.mp4" data-cap="learning online, on the hardware" aria-label="learning online, on the hardware"><video data-src="media/atari-train.mp4" poster="media/atari-train.jpg" muted loop playsinline preload="none" width="540" height="960"></video></button><button class="shot" style="--ar:1024/768" data-full="media/atari-setup.jpg" data-cap="the rig: screen, camera, laptop and the robot" aria-label="the rig: screen, camera, laptop and the robot"><img src="media/atari-setup.jpg" alt="the rig: screen, camera, laptop and the robot" width="1024" height="768" loading="lazy"></button><button class="shot" style="--ar:768/1024" data-full="media/atari-robotroller.jpg" data-cap="the robot, rebuilt on Feetech servos" aria-label="the robot, rebuilt on Feetech servos"><img src="media/atari-robotroller.jpg" alt="the robot, rebuilt on Feetech servos" width="768" height="1024" loading="lazy"></button><button class="shot" style="--ar:480/854" data-video="media/so101-pick-a.mp4" data-cap="a learned pick-and-place policy on the SO-101" aria-label="a learned pick-and-place policy on the SO-101"><video data-src="media/so101-pick-a.mp4" poster="media/so101-pick-a.jpg" muted loop playsinline preload="none" width="480" height="854"></video></button><button class="shot" style="--ar:478/850" data-video="media/so101-pick-b.mp4" data-cap="another rollout, side view" aria-label="another rollout, side view"><video data-src="media/so101-pick-b.mp4" poster="media/so101-pick-b.jpg" muted loop playsinline preload="none" width="478" height="850"></video></button></div>
-    </div>
-
-    <div class="part" id="cars">
-      <div class="prose">
-        <p class="when">may &ndash; october 2026</p>
-        <p>then cars. <a href="https://github.com/sahilapage/McQueen">mcqueen</a> began as a toy ferrari and became a self-driving one: a jetson nano streams the camera over the internet to an rtx 4090 that drives it in real time, using openpilot&rsquo;s vision encoder and a head trained on my own drives. that pulled me into <a href="https://github.com/sahilapage/openpilot-distill-lab">openpilot</a> itself. i distilled its driving model into a 17m-parameter student, ported comma&rsquo;s 4b world model to one gpu, trained the student inside it, and got my <a href="https://github.com/YassineYousfi/openpilot.distill/pull/1">first pull request merged by comma</a>: 3&times; faster loading with 7&times; less memory.</p>
-      </div>
-      <div class="strip"><button class="shot" style="--ar:1400/788" data-full="media/mcqueen-build-1.jpg" data-cap="McQueen, day one: body off, servo sweeps" aria-label="McQueen, day one: body off, servo sweeps"><img src="media/mcqueen-build-1.jpg" alt="McQueen, day one: body off, servo sweeps" width="1400" height="788" loading="lazy"></button><button class="shot" style="--ar:1400/788" data-full="media/mcqueen-build-2.jpg" data-cap="wired up: camera, Jetson Nano, antenna, perfboard" aria-label="wired up: camera, Jetson Nano, antenna, perfboard"><img src="media/mcqueen-build-2.jpg" alt="wired up: camera, Jetson Nano, antenna, perfboard" width="1400" height="788" loading="lazy"></button><button class="shot" style="--ar:669/412" data-full="media/mcqueen-car.jpg" data-cap="McQueen, finished" aria-label="McQueen, finished"><img src="media/mcqueen-car.jpg" alt="McQueen, finished" width="669" height="412" loading="lazy"></button><button class="shot" style="--ar:464/832" data-video="media/mcqueen-demo.mp4" data-cap="McQueen driving itself" aria-label="McQueen driving itself"><video data-src="media/mcqueen-demo.mp4" poster="media/mcqueen-demo.jpg" muted loop playsinline preload="none" width="464" height="832"></video></button><button class="shot" style="--ar:512/256" data-full="media/openpilot-path.jpg" data-cap="openpilot.distill: the student’s path (orange) over openpilot’s (blue)" aria-label="openpilot.distill: the student’s path (orange) over openpilot’s (blue)"><img src="media/openpilot-path.jpg" alt="openpilot.distill: the student’s path (orange) over openpilot’s (blue)" width="512" height="256" loading="lazy"></button></div>
-    </div>
-
-    <div class="part" id="now">
-      <div class="prose">
-        <p class="when">now</p>
-        <p>training inside a world model left me with a question i couldn&rsquo;t drop: a learned simulator is only useful if what happens in it would happen for real. so this fall i&rsquo;ve been testing them. driving world models <b>move the car ahead out of your way</b> when you plan to hit it, they <b>forget cars they have just seen</b>, and robot benchmarks change with <b>the random seed and the gpu</b>. same question i started with, one level up: not just <i>does the robot work</i>, but <i>does the thing we test it in tell the truth</i>.</p>
-      </div>
-      <div class="strip"><button class="shot" style="--ar:960/512" data-video="media/planleak-sbs.mp4" data-cap="the plan leak: same crashing plan, left as released, right repaired" aria-label="the plan leak: same crashing plan, left as released, right repaired"><video data-src="media/planleak-sbs.mp4" poster="media/planleak-sbs.jpg" muted loop playsinline preload="none" width="960" height="512"></video></button><button class="shot" style="--ar:480/344" data-full="media/std-truth.jpg" data-cap="an occupancy scene with every vehicle in it" aria-label="an occupancy scene with every vehicle in it"><img src="media/std-truth.jpg" alt="an occupancy scene with every vehicle in it" width="480" height="344" loading="lazy"></button><button class="shot" style="--ar:480/344" data-full="media/std-scene.jpg" data-cap="what the world model imagines 3 s later: the boxed vehicles are gone" aria-label="what the world model imagines 3 s later: the boxed vehicles are gone"><img src="media/std-scene.jpg" alt="what the world model imagines 3 s later: the boxed vehicles are gone" width="480" height="344" loading="lazy"></button><button class="shot" style="--ar:360/360" data-video="media/audit-seed-a.mp4" data-cap="one random seed in a LIBERO kitchen" aria-label="one random seed in a LIBERO kitchen"><video data-src="media/audit-seed-a.mp4" poster="media/audit-seed-a.jpg" muted loop playsinline preload="none" width="360" height="360"></video></button><button class="shot" style="--ar:360/360" data-video="media/audit-seed-b.mp4" data-cap="another seed: the microwave has moved" aria-label="another seed: the microwave has moved"><video data-src="media/audit-seed-b.mp4" poster="media/audit-seed-b.jpg" muted loop playsinline preload="none" width="360" height="360"></video></button></div>
-    </div>
-  </section>
-
-  <section id="research">
-    <h2>research</h2>
-    <div class="prose">
-      <p>papers and write-ups, with code. try the road first: drag across it to set your speed. the car at the red light stays where it is, as physics says it should.</p>
-    </div>
-    <figure class="road">
-      <canvas id="road" role="img" aria-label="A top-down road: drag to set your car's speed toward a car waiting at a red light, which stays where it is."></canvas>
-      <figcaption>in some driving world models, it doesn&rsquo;t. that&rsquo;s the first paper.</figcaption>
-    </figure>
-
+  <section id="publications">
+    <h2>publications</h2>
     <article class="pub">
+      <a class="thumb" href="https://sahilapage.github.io/plan-leak/" aria-label="Project page: Plans Are Not Interventions">
+        <video data-src="media/planleak-sbs.mp4" poster="media/planleak-sbs.jpg" muted loop playsinline preload="none" width="960" height="512"></video>
+      </a>
       <div>
-        <p class="venue"><span class="spot">spotlight</span> &middot; corl 2026, workshop on grounded 4d world models</p>
         <h3><a href="https://sahilapage.github.io/plan-leak/">Plans Are Not Interventions: Measuring and Repairing Plan Leakage in Driving World Models</a></h3>
         <p class="authors"><b>Sahil Apage</b>, Medhansh Abhilash</p>
-        <p class="tl">driving world models read other cars off your plan, so a plan to hit a car stopped at a red light moves the car away. the crash check misses all 18 crashes, and policies trained inside crash 2.8&times; as often on real logs. letting the model see only your past fixes it; a test-time version brings the crash back in 16 of 18 scenes.</p>
-        <p class="links"><a href="https://sahilapage.github.io/plan-leak/assets/Plans_Are_Not_Interventions_CoRL2026_camera_ready.pdf">paper</a><a href="https://sahilapage.github.io/plan-leak/">project page</a><a href="https://github.com/sahilapage/plan-leak-code">code</a></p>
+        <p class="venue">Grounded 4D World Models Workshop, Conference on Robot Learning <b>(CoRL 2026, Spotlight)</b></p>
+        <p class="links">[ <a href="https://sahilapage.github.io/plan-leak/assets/Plans_Are_Not_Interventions_CoRL2026_camera_ready.pdf">paper</a> ] [ <a href="https://sahilapage.github.io/plan-leak/">project page</a> ] [ <a href="https://github.com/sahilapage/plan-leak-code">code</a> ]</p>
+        <p class="tags"><span>World Models</span><span>Autonomous Driving</span></p>
       </div>
-      <figure class="pub-media"><video data-src="media/planleak-scene.mp4" poster="media/planleak-scene.jpg" muted loop playsinline preload="none" width="960" height="240" aria-label="One nuScenes scene, same crashing plan: left as released, the car ahead stays away; right repaired, the crash shows"></video></figure>
     </article>
-
     <article class="pub">
+      <a class="thumb" href="https://sahilapage.github.io/seen-then-deleted/" aria-label="Project page: Seen, Then Deleted">
+        <img src="media/std-scene.jpg" width="480" height="344" alt="A 4D occupancy scene; the vehicles the world model forgot are boxed in red" loading="lazy">
+      </a>
       <div>
-        <p class="venue">wacv 2027, wam-ad workshop &middot; archival</p>
         <h3><a href="https://sahilapage.github.io/seen-then-deleted/">Seen, Then Deleted: Object Permanence in 4D Occupancy World Models</a></h3>
         <p class="authors"><b>Sahil Apage</b>, Medhansh Abhilash, Kartik Tagore</p>
-        <p class="tl">three 4d occupancy world models lose 59&ndash;79% of the moving vehicles they have just seen within 3 seconds, so crashes with them never appear. a permanence layer that keeps seen vehicles in the scene cuts the loss by up to 15.5 points.</p>
-        <p class="links"><a href="https://sahilapage.github.io/seen-then-deleted/assets/Seen_Then_Deleted_WAM-AD_camera_ready.pdf">paper</a><a href="https://sahilapage.github.io/seen-then-deleted/">project page</a><a href="https://github.com/sahilapage/seen-then-deleted-code">code</a></p>
+        <p class="venue">WAM-AD Workshop, IEEE/CVF Winter Conference on Applications of Computer Vision <b>(WACV 2027)</b></p>
+        <p class="links">[ <a href="https://sahilapage.github.io/seen-then-deleted/assets/Seen_Then_Deleted_WAM-AD_camera_ready.pdf">paper</a> ] [ <a href="https://sahilapage.github.io/seen-then-deleted/">project page</a> ] [ <a href="https://github.com/sahilapage/seen-then-deleted-code">code</a> ]</p>
+        <p class="tags"><span>World Models</span><span>Autonomous Driving</span></p>
       </div>
-      <figure class="pub-media two"><img src="media/std-truth.jpg" alt="Occupancy scene with every vehicle present" width="480" height="344" loading="lazy"><img src="media/std-scene.jpg" alt="The model's imagined scene; vehicles it forgot are boxed in red" width="480" height="344" loading="lazy"></figure>
-    </article>
-
-    <article class="pub">
-      <div>
-        <p class="venue">blog post &middot; 2026</p>
-        <h3><a href="https://sahilapage.github.io/eval-audit/">The seed moved the microwave</a></h3>
-        <p class="authors"><b>Sahil Apage</b></p>
-        <p class="tl">521 evaluations of 7 vlas on libero and simplerenv. the random seed moves furniture the stored scenes never record, and the gpu, renderer, simulator version and a few hidden settings each change results as much as a new seed.</p>
-        <p class="links"><a href="https://sahilapage.github.io/eval-audit/">read the post</a></p>
-      </div>
-      <figure class="pub-media two"><video data-src="media/audit-seed-a.mp4" poster="media/audit-seed-a.jpg" muted loop playsinline preload="none" width="360" height="360" aria-label="A LIBERO kitchen with one seed"></video><video data-src="media/audit-seed-b.mp4" poster="media/audit-seed-b.jpg" muted loop playsinline preload="none" width="360" height="360" aria-label="The same kitchen with another seed; the microwave has moved"></video></figure>
     </article>
   </section>
 
-  <section id="built">
-    <h2>things i&rsquo;ve built</h2>
-    <ul class="built">
-      <li><a href="https://github.com/sahilapage/openpilot-distill-lab">openpilot.distill</a> openpilot distilled into a 17m student, trained inside comma&rsquo;s world model on one 4090</li>
-      <li><a href="https://github.com/sahilapage/McQueen">mcqueen</a> a self-driving rc car, driven over the internet by a 4090</li>
-      <li><a href="https://github.com/SRA-VJTI/physical-atari">physical atari</a> real-time reinforcement learning on a robot that plays atari</li>
-      <li><a href="https://github.com/sahilapage/so-hand">so-hand</a> the amazing hand: in-hand rotation with sac, retargeting from video</li>
-      <li><a href="https://github.com/sahilapage/decide">decide</a> a 17m decision model that answers in 7 ms on a cpu; won cognition next&rsquo;26</li>
-      <li><a href="https://github.com/4rhan/anti_drone">anti-drone</a> radio detection and turret tracking; sih 2025 runner up</li>
-    </ul>
+  <section id="contact" class="contact">
+    <h2>contact</h2>
+    <p>we can talk at <a href="mailto:sahilvapage@gmail.com">sahilvapage@gmail.com</a></p>
+    <p class="elsewhere"><a href="https://github.com/sahilapage">github</a> <a href="https://x.com/sahilsapage">x</a></p>
+  </section>
+
+  <section id="journey">
+    <h2>journey</h2>
+
+    <div class="chap" id="hand">
+      <h3>the bionic hand</h3>
+      <p class="intro-p">to start with, i wanted to tackle the hardest problem i could sense in robotics. so i got my hands dirty with dexterous manipulation, with the plan of somehow controlling it with brain signals lol.</p>
+      <ul class="steps">
+        <li><p>i 3d printed and built pollen robotics&rsquo; <a href="https://github.com/sahilapage/so-hand">amazing hand</a>.</p><div class="strip" style="--n:1;--sum:0.7500"><button class="shot" style="--ar:1050/1400" data-full="media/sohand-assembled.jpg" data-cap="the assembled amazing hand" aria-label="the assembled amazing hand"><img src="media/sohand-assembled.jpg" alt="the assembled amazing hand" width="1050" height="1400" loading="lazy"></button></div></li>
+        <li><p>imitation learning to teach the hand to do stuff. a teleop device for a dexterous hand is hard to make, so i recorded expert demos of my own hand with a stereo depth camera (oak-d pro), recovered the 3d hand poses from the videos, and mapped them onto the robot hand by solving inverse kinematics.</p><div class="strip" style="--n:1;--sum:1.7766"><button class="shot" style="--ar:1400/788" data-full="media/sohand-retarget.jpg" data-cap="my hand, then the robot hand matching it" aria-label="my hand, then the robot hand matching it"><img src="media/sohand-retarget.jpg" alt="my hand, then the robot hand matching it" width="1400" height="788" loading="lazy"></button></div></li>
+        <li><p>then trained rl policies for in-hand manipulation and attempted sim2real: a policy that keeps a cube turning in the palm, and a real setup with a camera tracking the cube.</p><div class="strip" style="--n:2;--sum:2.4638"><button class="shot" style="--ar:416/368" data-video="media/sohand-sim.mp4" data-cap="rl in mujoco: the cube keeps turning in the palm" aria-label="rl in mujoco: the cube keeps turning in the palm"><video data-src="media/sohand-sim.mp4" poster="media/sohand-sim.jpg" muted loop playsinline preload="none" width="416" height="368"></video></button><button class="shot" style="--ar:1400/1050" data-full="media/sohand-setup.jpg" data-cap="the sim2real setup: the hand, an apriltag cube and a tracking camera" aria-label="the sim2real setup: the hand, an apriltag cube and a tracking camera"><img src="media/sohand-setup.jpg" alt="the sim2real setup: the hand, an apriltag cube and a tracking camera" width="1400" height="1050" loading="lazy"></button></div></li>
+        <li><p>also attempted the brain-signal part by recording eeg, and mounted the amazing hand on an so-101 arm. tried making it all work lol!</p><div class="strip" style="--n:3;--sum:2.1343"><button class="shot" style="--ar:1050/1400" data-full="media/hand-arm-up.jpg" data-cap="the amazing hand on an so-101 arm" aria-label="the amazing hand on an so-101 arm"><img src="media/hand-arm-up.jpg" alt="the amazing hand on an so-101 arm" width="1050" height="1400" loading="lazy"></button><button class="shot" style="--ar:1151/1400" data-full="media/hand-arm-table.jpg" data-cap="arm and hand bring-up" aria-label="arm and hand bring-up"><img src="media/hand-arm-table.jpg" alt="arm and hand bring-up" width="1151" height="1400" loading="lazy"></button><button class="shot" style="--ar:787/1400" data-full="media/hand-arm-held.jpg" data-cap="the hand and arm, freshly assembled" aria-label="the hand and arm, freshly assembled"><img src="media/hand-arm-held.jpg" alt="the hand and arm, freshly assembled" width="787" height="1400" loading="lazy"></button></div></li>
+      </ul>
+    </div>
+
+    <div class="chap" id="learning">
+      <h3>robot learning</h3>
+      <p class="intro-p">next i worked with imitation learning policies and vision-language-action models, first on so-101 arms, then on yam arms.</p>
+      <ul class="steps">
+        <li><p>teleoperated data collection, then training and fine-tuning policies.</p><div class="strip" style="--n:3;--sum:1.6865"><button class="shot" style="--ar:480/854" data-video="media/so101-pick-a.mp4" data-cap="a learned pick-and-place policy on the so-101" aria-label="a learned pick-and-place policy on the so-101"><video data-src="media/so101-pick-a.mp4" poster="media/so101-pick-a.jpg" muted loop playsinline preload="none" width="480" height="854"></video></button><button class="shot" style="--ar:478/850" data-video="media/so101-pick-b.mp4" data-cap="another rollout, side view" aria-label="another rollout, side view"><video data-src="media/so101-pick-b.mp4" poster="media/so101-pick-b.jpg" muted loop playsinline preload="none" width="478" height="850"></video></button><button class="shot" style="--ar:480/854" data-video="media/yam-fold.mp4" data-cap="yam arms folding a cloth (1.6x speed)" aria-label="yam arms folding a cloth (1.6x speed)"><video data-src="media/yam-fold.mp4" poster="media/yam-fold.jpg" muted loop playsinline preload="none" width="480" height="854"></video></button></div></li>
+        <li><p>audited 521 evaluations of 7 vlas (including &pi;0, &pi;0.5, smolvla, x-vla and gr00t) on libero and simplerenv, to point out the hidden choices beneath the policy that move the scores. <a href="https://sahilapage.github.io/eval-audit/">read the blog</a>.</p><div class="strip" style="--n:2;--sum:2.0000"><button class="shot" style="--ar:360/360" data-video="media/audit-seed-a.mp4" data-cap="one random seed in a libero kitchen" aria-label="one random seed in a libero kitchen"><video data-src="media/audit-seed-a.mp4" poster="media/audit-seed-a.jpg" muted loop playsinline preload="none" width="360" height="360"></video></button><button class="shot" style="--ar:360/360" data-video="media/audit-seed-b.mp4" data-cap="another seed: the microwave has moved" aria-label="another seed: the microwave has moved"><video data-src="media/audit-seed-b.mp4" poster="media/audit-seed-b.jpg" muted loop playsinline preload="none" width="360" height="360"></video></button></div></li>
+        <li><p>built keen technologies&rsquo; physical atari setup about 6&times; cheaper, for about $55 in actuators, by porting it to cheap sts3215 servos (<a href="https://github.com/SRA-VJTI/physical-atari">code</a>).</p><div class="strip" style="--n:2;--sum:2.0833"><button class="shot" style="--ar:768/1024" data-full="media/atari-robotroller.jpg" data-cap="the joystick robot, rebuilt on sts3215 servos" aria-label="the joystick robot, rebuilt on sts3215 servos"><img src="media/atari-robotroller.jpg" alt="the joystick robot, rebuilt on sts3215 servos" width="768" height="1024" loading="lazy"></button><button class="shot" style="--ar:1024/768" data-full="media/atari-setup.jpg" data-cap="the rig: screen, camera, laptop and the robot" aria-label="the rig: screen, camera, laptop and the robot"><img src="media/atari-setup.jpg" alt="the rig: screen, camera, laptop and the robot" width="1024" height="768" loading="lazy"></button></div></li>
+        <li><p>reinforcement learning on the hardware atari: it learned to play pong overnight, training on its own hardware.</p><div class="strip" style="--n:2;--sum:1.1250"><button class="shot" style="--ar:540/960" data-video="media/atari-eval.mp4" data-cap="trained on its own hardware: playing pong through a real joystick" aria-label="trained on its own hardware: playing pong through a real joystick"><video data-src="media/atari-eval.mp4" poster="media/atari-eval.jpg" muted loop playsinline preload="none" width="540" height="960"></video></button><button class="shot" style="--ar:540/960" data-video="media/atari-train.mp4" data-cap="learning online, on the hardware" aria-label="learning online, on the hardware"><video data-src="media/atari-train.mp4" poster="media/atari-train.jpg" muted loop playsinline preload="none" width="540" height="960"></video></button></div></li>
+      </ul>
+    </div>
+
+    <div class="chap" id="driving">
+      <h3>self-driving</h3>
+      <p class="intro-p">i&rsquo;ve been a fan of self-driving cars from day one, and started by building <a href="https://github.com/sahilapage/McQueen">mcqueen</a>, an end-to-end, vision-only driving stack on an rc car.</p>
+      <ul class="steps">
+        <li><p>a jetson nano streams the camera over the internet to a remote rtx 4090 that drives it in real time, using openpilot&rsquo;s vision encoder and a head trained on my own drives.</p><div class="strip" style="--n:4;--sum:5.7348"><button class="shot" style="--ar:464/832" data-video="media/mcqueen-demo.mp4" data-cap="mcqueen driving itself" aria-label="mcqueen driving itself"><video data-src="media/mcqueen-demo.mp4" poster="media/mcqueen-demo.jpg" muted loop playsinline preload="none" width="464" height="832"></video></button><button class="shot" style="--ar:1400/788" data-full="media/mcqueen-build-1.jpg" data-cap="day one: body off, servo sweeps" aria-label="day one: body off, servo sweeps"><img src="media/mcqueen-build-1.jpg" alt="day one: body off, servo sweeps" width="1400" height="788" loading="lazy"></button><button class="shot" style="--ar:1400/788" data-full="media/mcqueen-build-2.jpg" data-cap="wired up: camera, jetson nano, antenna, perfboard" aria-label="wired up: camera, jetson nano, antenna, perfboard"><img src="media/mcqueen-build-2.jpg" alt="wired up: camera, jetson nano, antenna, perfboard" width="1400" height="788" loading="lazy"></button><button class="shot" style="--ar:669/412" data-full="media/mcqueen-car.jpg" data-cap="mcqueen, finished" aria-label="mcqueen, finished"><img src="media/mcqueen-car.jpg" alt="mcqueen, finished" width="669" height="412" loading="lazy"></button></div></li>
+        <li><p>that pulled me into openpilot itself. i distilled its driving model into a 17m-parameter <a href="https://github.com/sahilapage/openpilot-distill-lab">student</a>, ported comma&rsquo;s 4b world model to one gpu, trained the student inside it, and got my <a href="https://github.com/YassineYousfi/openpilot.distill/pull/1">first pull request merged by comma</a>: 3&times; faster loading with 7&times; less memory.</p><div class="strip" style="--n:1;--sum:2.0000"><button class="shot" style="--ar:512/256" data-full="media/openpilot-path.jpg" data-cap="openpilot.distill: the student’s path (orange) over openpilot’s (blue)" aria-label="openpilot.distill: the student’s path (orange) over openpilot’s (blue)"><img src="media/openpilot-path.jpg" alt="openpilot.distill: the student’s path (orange) over openpilot’s (blue)" width="512" height="256" loading="lazy"></button></div></li>
+        <li><p>then we asked whether that simulator tells the truth. when our car doesn&rsquo;t brake for the car ahead, the car ahead copies our speed, so the gap never closes on screen and 7 of 7 crashes stay hidden: the world model draws what the human driver did next, not what we did. we fixed it without retraining by re-rendering each frame from our car&rsquo;s real position with depth and letting comma&rsquo;s own model finish it (the same recipe as <a href="https://arxiv.org/abs/2608.11601">zhang et al.</a>). the gap it shows went from 4% to 94% of the real change. it is the same flaw <a href="#publications">our papers</a> found in public world models.</p><div class="strip" style="--n:1;--sum:4.0000"><button class="shot" style="--ar:960/240" data-video="media/planleak-scene.mp4" data-cap="the same flaw in a public world model: one plan into a stopped car, as released (left) and repaired (right)" aria-label="the same flaw in a public world model: one plan into a stopped car, as released (left) and repaired (right)"><video data-src="media/planleak-scene.mp4" poster="media/planleak-scene.jpg" muted loop playsinline preload="none" width="960" height="240"></video></button></div></li>
+        <li><p>with a simulator we could trust, we ran rl on comma&rsquo;s own driving policy. under a steady pull, drift fell from 5.1 m to 2.8 m while normal driving on real roads stayed the same. when braking was needed, crashes fell from 23% to 2%, as safe as a classic cruise controller with about half its hard braking.</p></li>
+      </ul>
+    </div>
+
+    <div class="chap" id="sra">
+      <h3>sra</h3>
+      <p class="intro-p">apart from all of the above, i have a great time as head of marketing and public relations at the <a href="https://sravjti.in">society of robotics and automation (sra)</a>.</p>
+      <ul class="steps">
+        <li><p>we keep building frontier work and research, learning from our seniors and mentoring our juniors on cool stuff.</p></li>
+        <li><p>as part of sra i&rsquo;ve sold robot kits to 200+ students and taught workshops on <a href="https://github.com/SRA-VJTI/MARIO">mario</a> and <a href="https://github.com/SRA-VJTI/Pixels">pixels</a>.</p><div class="strip" style="--n:1;--sum:0.5621"><button class="shot" style="--ar:480/854" data-video="media/mario-arm.mp4" data-cap="mario, the ros 2 arm from our workshop kit" aria-label="mario, the ros 2 arm from our workshop kit"><video data-src="media/mario-arm.mp4" poster="media/mario-arm.jpg" muted loop playsinline preload="none" width="480" height="854"></video></button></div></li>
+        <li><p>runner-up at smart india hackathon 2025, building an <a href="https://github.com/4rhan/anti_drone">anti-drone system</a> for the indo-tibetan border police. ended up hacking radio frequencies and software-defined radios lol!</p><div class="strip" style="--n:3;--sum:5.0364"><button class="shot" style="--ar:1182/666" data-full="media/sih-team.jpg" data-cap="team benzene at the smart india hackathon 2025 grand finale" aria-label="team benzene at the smart india hackathon 2025 grand finale"><img src="media/sih-team.jpg" alt="team benzene at the smart india hackathon 2025 grand finale" width="1182" height="666" loading="lazy"></button><button class="shot" style="--ar:627/566" data-full="media/antidrone-turret.jpg" data-cap="the anti-drone turret, tracking what the detector sees" aria-label="the anti-drone turret, tracking what the detector sees"><img src="media/antidrone-turret.jpg" alt="the anti-drone turret, tracking what the detector sees" width="627" height="566" loading="lazy"></button><button class="shot" style="--ar:1400/650" data-full="media/antidrone-spectrum.jpg" data-cap="a drone&#x27;s control link hopping across the 2.4 ghz band" aria-label="a drone&#x27;s control link hopping across the 2.4 ghz band"><img src="media/antidrone-spectrum.jpg" alt="a drone&#x27;s control link hopping across the 2.4 ghz band" width="1400" height="650" loading="lazy"></button></div></li>
+        <li><p>won the cognition hackathon with <a href="https://github.com/sahilapage/decide">decide</a>, a system-one model that runs on a cpu with max accuracy and min latency lol!</p><div class="strip" style="--n:1;--sum:1.7722"><button class="shot" style="--ar:1400/790" data-full="media/decide-chart.jpg" data-cap="decide: one shared model, three decisions, on a cpu" aria-label="decide: one shared model, three decisions, on a cpu"><img src="media/decide-chart.jpg" alt="decide: one shared model, three decisions, on a cpu" width="1400" height="790" loading="lazy"></button></div></li>
+      </ul>
+    </div>
   </section>
 </main>
 
-<footer id="contact">
+<footer>
   <div class="wrap foot">
     <nav aria-label="Elsewhere">
       <a href="mailto:sahilvapage@gmail.com">email</a>
