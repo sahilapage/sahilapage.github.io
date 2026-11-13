@@ -82,7 +82,7 @@ section { padding-top: clamp(22px, 2.6vw, 34px); }
 .elsewhere { display: flex; gap: 20px; }
 
 /* journey: chapter title on the left (stays in view), intro + steps on the right, each step with its own media row */
-#journey > h2 { margin-bottom: clamp(18px, 2.4vw, 28px); }
+#workbench > h2 { margin-bottom: clamp(18px, 2.4vw, 28px); }
 .chap { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0 clamp(32px, 4.4vw, 64px); padding: clamp(20px, 2.4vw, 30px) 0; border-top: 1px solid var(--rule); }
 .chap:last-child { border-bottom: 1px solid var(--rule); }
 .chap-h { position: sticky; top: 28px; align-self: start; }
