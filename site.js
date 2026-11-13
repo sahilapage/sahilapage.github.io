@@ -140,53 +140,60 @@
       return px;
     }
 
-    let W = 0, H = 0, cell = 5, tiles = [], running = false, px = -1e4, py = -1e4, inside = false;
-    const rnd = (a, b) => a + Math.random() * (b - a);
+    // dutilh-style light: every tile is a tiny facet (random angle a, gloss b). A light follows the cursor with
+    // easing (idles on a slow sweep); each facet brightens by how squarely it faces the light, with distance falloff.
+    let W = 0, H = 0, cell = 3, cols = 0, rows = 0, base, fa, fb, mouse = null, vis = true, light = { x: 0, y: 0 }, t0 = 0, introStart = 0, raf = 0, last = 0;
+    let off, octx, img;
+    const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+    const sstep = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+    const easeOut = u => 1 - (1 - u) ** 3;
     function build(intro) {
       const dpr = Math.min(devicePixelRatio || 1, 2);
       W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      cell = W > 760 ? 3 : 3;
-      const cols = Math.ceil(W / cell), rows = Math.ceil(H / cell), pix = paint(cols, rows);
-      tiles = [];
-      for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
-        const c = pix[j * cols + i]; if (!c) continue;
-        const t = { x: i * cell, y: j * cell, ox: 0, oy: 0, vx: 0, vy: 0, hx: 0, hy: 0, c: `rgb(${c.map(Math.round)})` };
-        if (intro) { t.oy = -rnd(0.3, 1) * H * (1 - j / rows) * 0.6; }
-        tiles.push(t);
-      }
-      draw(); if (intro && !reduce) start();
+      cell = 3; cols = Math.ceil(W / cell); rows = Math.ceil(H / cell);
+      const pix = paint(cols, rows), n = cols * rows;
+      base = new Float32Array(n * 3); fa = new Float32Array(n); fb = new Float32Array(n);
+      for (let k = 0; k < n; k++) { const c = pix[k] || BG; base[k * 3] = c[0]; base[k * 3 + 1] = c[1]; base[k * 3 + 2] = c[2]; fa[k] = Math.random(); fb[k] = Math.random(); }
+      off = document.createElement('canvas'); off.width = cols; off.height = rows; octx = off.getContext('2d'); img = octx.createImageData(cols, rows);
+      light.x = 0.3 * W; light.y = -0.5 * H;
+      introStart = intro && !reduce ? performance.now() + 120 : -1e9;
+      frame(performance.now());
     }
-    function draw() {
-      ctx.fillStyle = `rgb(${BG})`; ctx.fillRect(0, 0, W, H);
-      for (const t of tiles) { ctx.fillStyle = t.c; ctx.fillRect(t.x + t.ox + t.hx, t.y + t.oy + t.hy, cell, cell); }
+    // colour of one tile under the light (same formula family as dutilh's mosaic)
+    function shade(k, i, j, out) {
+      const x = i * cell + cell / 2, y = j * cell + cell / 2, dx = x - light.x, dy = y - light.y, d = Math.hypot(dx, dy);
+      const f = Math.max(0, Math.cos(fa[k] * Math.PI * 2 - Math.atan2(-dy, -dx))) * fb[k], o = 1 - sstep(20, 260, d);
+      const m = 0.82 + 0.6 * f * (0.3 + 0.7 * o);
+      let r = base[k * 3] * m, g = base[k * 3 + 1] * m, b = base[k * 3 + 2] * m;
+      if (f > 0.85 && o > 0.4) { const q = (f - 0.85) * 4 * o; r += (255 - r) * q; g += (246 - g) * q; b += (216 - b) * q; }
+      out[0] = r > 255 ? 255 : r; out[1] = g > 255 ? 255 : g; out[2] = b > 255 ? 255 : b;
     }
-    function step(dt) {
-      let motion = 0; const R = 90, PUSH = 15, k = 1 - Math.exp(-dt * 9);
-      for (const t of tiles) {
-        let ax = -60 * t.ox - 9 * t.vx, ay = -60 * t.oy - 9 * t.vy, tx = 0, ty = 0;
-        if (inside) {
-          const dx = t.x + cell / 2 - px, dy = t.y + cell / 2 - py, d = Math.hypot(dx, dy);
-          if (d < R) { const u = 1 - d / R, s = u * u * (3 - 2 * u), dd = d || 1; tx = dx / dd * s * PUSH; ty = dy / dd * s * PUSH; }
+    const rgb = [0, 0, 0];
+    function frame(now) {
+      const tt = reduce ? 0 : now / 1000, tgt = mouse || { x: W * (0.5 + 0.45 * Math.sin(0.15 * tt)), y: 0.15 * H };
+      light.x += (tgt.x - light.x) * 0.12; light.y += (tgt.y - light.y) * 0.12;
+      const c = (now - introStart) / 1000;
+      if (c < 1.4) {                                  // intro: tiles pop in from the left, flashing warm
+        ctx.fillStyle = `rgb(${BG})`; ctx.fillRect(0, 0, W, H);
+        for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+          const k = j * cols + i, e = (i * cell / W * 0.8 + j * cell / H * 0.2) * 0.62 + 0.07 * fa[k], u = clamp01((c - e) / 0.3); if (u <= 0) continue;
+          shade(k, i, j, rgb); const fl = 1 - u, s = (0.35 + 0.65 * easeOut(u)) * cell, cx = i * cell + cell / 2, cy = j * cell + cell / 2 - (1 - easeOut(u)) * 7;
+          ctx.fillStyle = `rgb(${Math.round(rgb[0] + (255 - rgb[0]) * .55 * fl)},${Math.round(rgb[1] + (244 - rgb[1]) * .55 * fl)},${Math.round(rgb[2] + (210 - rgb[2]) * .55 * fl)})`;
+          ctx.fillRect(cx - s / 2, cy - s / 2, s, s);
         }
-        t.hx += (tx - t.hx) * k; t.hy += (ty - t.hy) * k;
-        t.vx += ax * dt; t.vy += ay * dt; t.ox += t.vx * dt; t.oy += t.vy * dt;
-        motion = Math.max(motion, Math.abs(t.vx) + Math.abs(t.vy) + Math.abs(t.ox) + Math.abs(t.oy) + Math.abs(t.hx) + Math.abs(t.hy));
+        return;
       }
-      return motion;
+      const d = img.data;
+      for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { const k = j * cols + i; shade(k, i, j, rgb); const p = k * 4; d[p] = rgb[0]; d[p + 1] = rgb[1]; d[p + 2] = rgb[2]; d[p + 3] = 255; }
+      octx.putImageData(img, 0, 0); ctx.imageSmoothingEnabled = false; ctx.drawImage(off, 0, 0, cols * cell, rows * cell);
     }
-    let last = 0;
-    function loop(now) {
-      const dt = Math.min(0.033, (now - last) / 1000 || 0.016); last = now;
-      const m = step(dt); draw();
-      if (m < 0.08 && !inside) { running = false; for (const t of tiles) { t.ox = t.oy = t.vx = t.vy = t.hx = t.hy = 0; } draw(); return; }
-      requestAnimationFrame(loop);
-    }
-    function start() { if (!running && !reduce) { running = true; last = performance.now(); requestAnimationFrame(loop); } }
-    const at = e => { const b = cv.getBoundingClientRect(); px = e.clientX - b.left; py = e.clientY - b.top; };
-    cv.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; at(e); inside = true; start(); });
-    cv.addEventListener('pointerleave', () => { inside = false; px = py = -1e4; });
-    cv.addEventListener('click', e => { at(e); for (const t of tiles) { const dx = t.x - px, dy = t.y - py, d = Math.hypot(dx, dy) || 1, f = rnd(250, 900) * Math.exp(-d / 320); t.vx += dx / d * f + rnd(-60, 60); t.vy += dy / d * f + rnd(-60, 60); } start(); });
+    function loop(now) { raf = requestAnimationFrame(loop); if (!vis || now - last < 33) return; last = now; frame(now); }
+    const at = e => { const b = cv.getBoundingClientRect(); mouse = { x: e.clientX - b.left, y: e.clientY - b.top }; };
+    cv.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') at(e); });
+    cv.addEventListener('pointerleave', () => { mouse = null; });
+    new IntersectionObserver(es => { vis = es[0].isIntersecting; }).observe(cv);
     build(true);
+    if (!reduce) raf = requestAnimationFrame(loop);
     let rt, lastW = cv.clientWidth; new ResizeObserver(() => { if (cv.clientWidth === lastW) return; lastW = cv.clientWidth; clearTimeout(rt); rt = setTimeout(() => build(false), 120); }).observe(cv);
   })();
 })();
