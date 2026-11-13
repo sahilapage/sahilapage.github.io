@@ -8,6 +8,10 @@
   const tick = () => { clock.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit' }).format(new Date()).toLowerCase(); };
   tick(); setInterval(tick, 30000);
 
+  // lone portrait shot: put it beside its text
+  $$('.steps li').forEach(li => { const st = li.querySelectorAll(':scope > .strip'); if (st.length !== 1) return; const f = st[0].querySelectorAll('.fig'); if (f.length !== 1) return;
+    const ar = f[0].querySelector('.shot').style.getPropertyValue('--ar').split('/').map(Number); if (ar[0] / ar[1] < 1) li.classList.add('side'); });
+
   // fade-ins start when they come into view
   const fio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('go'); fio.unobserve(e.target); } }));
   $$('.up').forEach(el => fio.observe(el));

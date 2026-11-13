@@ -83,21 +83,25 @@ section { padding-top: clamp(22px, 2.6vw, 34px); }
 
 /* journey: chapter title on the left (stays in view), intro + steps on the right, each step with its own media row */
 #journey > h2 { margin-bottom: clamp(18px, 2.4vw, 28px); }
-.chap { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0 clamp(32px, 4.4vw, 64px); padding: clamp(36px, 4.6vw, 56px) 0; border-top: 1px solid var(--rule); }
+.chap { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0 clamp(32px, 4.4vw, 64px); padding: clamp(20px, 2.4vw, 30px) 0; border-top: 1px solid var(--rule); }
 .chap:last-child { border-bottom: 1px solid var(--rule); }
 .chap-h { position: sticky; top: 28px; align-self: start; }
 .num { display: block; font-family: var(--display); font-size: 19px; letter-spacing: .1em; color: var(--accent); margin: 0 0 4px; }
 .chap h3 { font-family: var(--display); font-weight: 500; font-style: italic; font-size: clamp(30px, 3vw, 40px); line-height: 1.05; margin: 0; color: var(--ink); }
-.intro-p { max-width: var(--prose); color: var(--ink); font-size: 21px; margin: 0 0 30px; }
+.intro-p { max-width: var(--prose); color: var(--ink); font-size: 21px; margin: 0 0 18px; }
 .steps { list-style: none; padding: 0; margin: 0; }
-.steps li { position: relative; padding: 0 0 0 24px; margin: 0 0 clamp(34px, 4vw, 48px); }
+.steps li { position: relative; padding: 0 0 0 24px; margin: 0 0 clamp(18px, 2vw, 26px); }
 .steps li:last-child { margin-bottom: 0; }
 .steps li::before { content: ''; position: absolute; left: 3px; top: .64em; width: 7px; height: 7px; background: var(--accent); }
 .steps p { max-width: var(--prose); color: var(--ink-2); margin: 0; }
 
 /* media rows: every shot shares one height that fits the row (no cropping), capped by --cap */
-.strip { --gap: 12px; --cap: 440px; container-type: inline-size; display: flex; gap: var(--gap); margin: 18px 0 0; }
-.strip + .strip { margin-top: 22px; }
+.strip { --gap: 12px; --cap: 380px; container-type: inline-size; display: flex; gap: var(--gap); margin: 12px 0 0; }
+.strip + .strip { margin-top: 14px; }
+/* a lone portrait shot sits beside its text instead of leaving the right half empty */
+.steps li.side { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 28px; align-items: start; }
+.steps li.side > p { grid-column: 1; grid-row: 1; }
+.steps li.side > .strip { grid-column: 2; grid-row: 1 / span 3; margin: 0; --cap: 320px; }
 .fig { flex: none; margin: 0; width: min-content; }
 .shot { display: block; height: min(var(--cap), calc((100cqw - (var(--n) - 1) * var(--gap)) / var(--sum))); aspect-ratio: var(--ar);
   padding: 0; border: 0; background: var(--bg-2); cursor: zoom-in; position: relative; overflow: hidden; border-radius: 3px;
@@ -147,6 +151,8 @@ footer { margin-top: clamp(30px, 4vw, 48px); padding: 26px 0 40px; border-top: 1
   .thumb { max-width: 420px; }
   .contact p { font-size: 20px; }
   .steps li { padding-left: 20px; }
+  .steps li.side { display: block; }
+  .steps li.side > .strip { margin-top: 12px; }
   .steps li::before { left: 1px; }
   .intro-p { font-size: 19.5px; margin-bottom: 24px; }
   .strip { overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; margin-right: calc(-1 * var(--gutter)); padding-right: var(--gutter); }
