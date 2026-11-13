@@ -8,10 +8,6 @@
   const tick = () => { clock.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit' }).format(new Date()).toLowerCase(); };
   tick(); setInterval(tick, 30000);
 
-  // lone portrait shot: put it beside its text
-  $$('.steps li').forEach(li => { const st = li.querySelectorAll(':scope > .strip'); if (st.length !== 1) return; const f = st[0].querySelectorAll('.fig'); if (f.length !== 1) return;
-    const ar = f[0].querySelector('.shot').style.getPropertyValue('--ar').split('/').map(Number); if (ar[0] / ar[1] < 1) li.classList.add('side'); });
-
   // fade-ins start when they come into view
   const fio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('go'); fio.unobserve(e.target); } }));
   $$('.up').forEach(el => fio.observe(el));
@@ -149,12 +145,12 @@
     function build(intro) {
       const dpr = Math.min(devicePixelRatio || 1, 2);
       W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      cell = W > 760 ? 5 : 4;
+      cell = W > 760 ? 3 : 3;
       const cols = Math.ceil(W / cell), rows = Math.ceil(H / cell), pix = paint(cols, rows);
       tiles = [];
       for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
         const c = pix[j * cols + i]; if (!c) continue;
-        const t = { x: i * cell, y: j * cell, ox: 0, oy: 0, vx: 0, vy: 0, c: `rgb(${c.map(Math.round)})` };
+        const t = { x: i * cell, y: j * cell, ox: 0, oy: 0, vx: 0, vy: 0, hx: 0, hy: 0, c: `rgb(${c.map(Math.round)})` };
         if (intro) { t.oy = -rnd(0.3, 1) * H * (1 - j / rows) * 0.6; }
         tiles.push(t);
       }
@@ -162,18 +158,19 @@
     }
     function draw() {
       ctx.fillStyle = `rgb(${BG})`; ctx.fillRect(0, 0, W, H);
-      for (const t of tiles) { ctx.fillStyle = t.c; ctx.fillRect(t.x + t.ox, t.y + t.oy, cell, cell); }
+      for (const t of tiles) { ctx.fillStyle = t.c; ctx.fillRect(t.x + t.ox + t.hx, t.y + t.oy + t.hy, cell, cell); }
     }
     function step(dt) {
-      let motion = 0; const R = 80, R2 = R * R;
+      let motion = 0; const R = 90, PUSH = 15, k = 1 - Math.exp(-dt * 9);
       for (const t of tiles) {
-        let ax = -60 * t.ox - 9 * t.vx, ay = -60 * t.oy - 9 * t.vy;
+        let ax = -60 * t.ox - 9 * t.vx, ay = -60 * t.oy - 9 * t.vy, tx = 0, ty = 0;
         if (inside) {
-          const dx = t.x + cell / 2 + t.ox - px, dy = t.y + cell / 2 + t.oy - py, d2 = dx * dx + dy * dy;
-          if (d2 < R2) { const dd = Math.sqrt(d2) || 1, f = (1 - dd / R) * 2400; ax += dx / dd * f; ay += dy / dd * f; }
+          const dx = t.x + cell / 2 - px, dy = t.y + cell / 2 - py, d = Math.hypot(dx, dy);
+          if (d < R) { const u = 1 - d / R, s = u * u * (3 - 2 * u), dd = d || 1; tx = dx / dd * s * PUSH; ty = dy / dd * s * PUSH; }
         }
+        t.hx += (tx - t.hx) * k; t.hy += (ty - t.hy) * k;
         t.vx += ax * dt; t.vy += ay * dt; t.ox += t.vx * dt; t.oy += t.vy * dt;
-        motion = Math.max(motion, Math.abs(t.vx) + Math.abs(t.vy) + Math.abs(t.ox) + Math.abs(t.oy));
+        motion = Math.max(motion, Math.abs(t.vx) + Math.abs(t.vy) + Math.abs(t.ox) + Math.abs(t.oy) + Math.abs(t.hx) + Math.abs(t.hy));
       }
       return motion;
     }
@@ -181,7 +178,7 @@
     function loop(now) {
       const dt = Math.min(0.033, (now - last) / 1000 || 0.016); last = now;
       const m = step(dt); draw();
-      if (m < 0.08 && !inside) { running = false; for (const t of tiles) { t.ox = t.oy = t.vx = t.vy = 0; } draw(); return; }
+      if (m < 0.08 && !inside) { running = false; for (const t of tiles) { t.ox = t.oy = t.vx = t.vy = t.hx = t.hy = 0; } draw(); return; }
       requestAnimationFrame(loop);
     }
     function start() { if (!running && !reduce) { running = true; last = performance.now(); requestAnimationFrame(loop); } }
