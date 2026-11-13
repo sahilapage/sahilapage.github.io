@@ -162,3 +162,11 @@ footer { margin-top: clamp(30px, 4vw, 48px); padding: 26px 0 40px; border-top: 1
   .strip.one .shot { height: min(var(--cap), calc(100cqw / var(--sum))); }
   .fig figcaption { font-size: 15.5px; }
 }
+
+/* the award: warm gold, a little proud */
+.award { margin: 6px 0 0; font-size: 20px; color: var(--ink); }
+.award b { font-weight: 600; background: linear-gradient(transparent 62%, rgba(232, 178, 60, .45) 62%); }
+.trophy { display: inline-block; transform-origin: 50% 80%; animation: wiggle 2.6s ease-in-out 1.2s 2; }
+@keyframes wiggle { 0%, 100% { transform: none; } 15% { transform: rotate(-14deg) scale(1.15); } 30% { transform: rotate(12deg) scale(1.15); } 45% { transform: rotate(-8deg); } 60% { transform: rotate(4deg); } }
+.tags span.gold { background: linear-gradient(135deg, #f6dc8c, #e8b23c); color: #4a3408; box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 1px 6px rgba(200, 140, 20, .35); }
+@media (prefers-reduced-motion: reduce) { .trophy { animation: none; } }
