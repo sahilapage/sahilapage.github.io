@@ -99,7 +99,7 @@ section { padding-top: clamp(22px, 2.6vw, 34px); }
 .strip { --gap: 12px; --cap: 380px; container-type: inline-size; display: flex; gap: var(--gap); margin: 12px 0 0; }
 .strip + .strip { margin-top: 14px; }
 /* a lone portrait shot sits beside its text instead of leaving the right half empty */
-.steps li.side { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 28px; align-items: start; }
+.steps li.side { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 0 28px; align-items: start; }
 .steps li.side > p { grid-column: 1; grid-row: 1; }
 .steps li.side > .strip { grid-column: 2; grid-row: 1 / span 3; margin: 0; --cap: 320px; }
 .fig { flex: none; margin: 0; width: min-content; }
